@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="深度学习,Pytorch,">
 
 
 
@@ -84,6 +84,7 @@
 
 
 <meta name="description" content="正常来说backward( )函数是要传入参数的，一直没弄明白backward需要传入的参数具体含义，但是没关系，生命在与折腾，咱们来折腾一下，嘿嘿。 对标量自动求导首先，如果out.backward()中的out是一个标量的话（相当于一个神经网络有一个样本，这个样本有两个属性，神经网络有一个输出）那么此时我的backward函数是不需要输入任何参数的。1234567891011121314imp">
+<meta name="keywords" content="深度学习,Pytorch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pytorch中的自动求导函数backward()所需参数的含义">
 <meta property="og:url" content="http://yoursite.com/2019/02/01/今天我发布了新的博客/index.html">
@@ -96,7 +97,7 @@
 <meta property="og:image" content="http://yoursite.com/images/pasted-6.png">
 <meta property="og:image" content="http://yoursite.com/images/pasted-7.png">
 <meta property="og:image" content="http://yoursite.com/images/pasted-8.png">
-<meta property="og:updated_time" content="2019-02-05T09:33:37.472Z">
+<meta property="og:updated_time" content="2019-02-05T10:03:52.172Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pytorch中的自动求导函数backward()所需参数的含义">
 <meta name="twitter:description" content="正常来说backward( )函数是要传入参数的，一直没弄明白backward需要传入的参数具体含义，但是没关系，生命在与折腾，咱们来折腾一下，嘿嘿。 对标量自动求导首先，如果out.backward()中的out是一个标量的话（相当于一个神经网络有一个样本，这个样本有两个属性，神经网络有一个输出）那么此时我的backward函数是不需要输入任何参数的。1234567891011121314imp">
@@ -211,6 +212,16 @@
         </li>
       
         
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
@@ -303,6 +314,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -364,6 +397,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+            <a href="/tags/Pytorch/" rel="tag"># Pytorch</a>
+          
+        </div>
       
 
       
@@ -452,7 +493,25 @@
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
