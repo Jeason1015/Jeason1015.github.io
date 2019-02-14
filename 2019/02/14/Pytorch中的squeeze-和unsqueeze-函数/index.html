@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Pytorch,深度学习,">
 
 
 
@@ -83,13 +83,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Jeason">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如：123&amp;gt;&amp;gt;&amp;gt; a = torch.rand(3)&amp;gt;&amp;gt;&amp;gt; a.shapetorch.Size([3]) 注意这里的a的shape是[3] ，既不是 [1,3] 也不是 [3,1]。这就说明它既不是行向量也不是列向量，只是一个数">
+<meta name="keywords" content="Pytorch,深度学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch中的squeeze()和unsqueeze()函数">
+<meta property="og:url" content="http://yoursite.com/2019/02/14/Pytorch中的squeeze-和unsqueeze-函数/index.html">
 <meta property="og:site_name" content="Jeason">
+<meta property="og:description" content="在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如：123&amp;gt;&amp;gt;&amp;gt; a = torch.rand(3)&amp;gt;&amp;gt;&amp;gt; a.shapetorch.Size([3]) 注意这里的a的shape是[3] ，既不是 [1,3] 也不是 [3,1]。这就说明它既不是行向量也不是列向量，只是一个数">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-02-14T15:03:04.061Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jeason">
+<meta name="twitter:title" content="Pytorch中的squeeze()和unsqueeze()函数">
+<meta name="twitter:description" content="在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如：123&amp;gt;&amp;gt;&amp;gt; a = torch.rand(3)&amp;gt;&amp;gt;&amp;gt; a.shapetorch.Size([3]) 注意这里的a的shape是[3] ，既不是 [1,3] 也不是 [3,1]。这就说明它既不是行向量也不是列向量，只是一个数">
 
 
 
@@ -119,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/2019/02/14/Pytorch中的squeeze-和unsqueeze-函数/">
 
 
 
 
 
-  <title>Jeason</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>Pytorch中的squeeze()和unsqueeze()函数 | Jeason</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -144,8 +149,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left 
-  page-home">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -248,9 +252,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -280,9 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/14/Pytorch中的squeeze-和unsqueeze-函数/" itemprop="url">Pytorch中的squeeze()和unsqueeze()函数</a></h1>
+          <h1 class="post-title" itemprop="name headline">Pytorch中的squeeze()和unsqueeze()函数</h1>
         
 
         <div class="post-meta">
@@ -354,19 +356,15 @@
       
 
       
-        
-          
-          在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如：123&gt;&gt;&gt; a = torch.rand(3)&gt;&gt;&gt; a.shapetorch.Size([3])
-注意这里的a的shap
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/14/Pytorch中的squeeze-和unsqueeze-函数/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <p>在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = torch.rand(<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.shape</span><br><span class="line">torch.Size([<span class="number">3</span>])</span><br></pre></td></tr></table></figure></p>
+<p>注意这里的a的shape是[3] ，既不是 [1,3] 也不是 [3,1]。这就说明它既不是行向量也不是列向量，只是一个数组。</p>
+<p>但是我们可以用squeeze（）和unsqueeze（）对其进行操作，比如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = torch.rand(<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.shape</span><br><span class="line">torch.Size([<span class="number">3</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = a.unsqueeze(<span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.shape</span><br><span class="line">torch.Size([<span class="number">3</span>,<span class="number">1</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = a.unsqueeze(<span class="number">0</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c.shape</span><br><span class="line">torch.Size([<span class="number">1</span>,<span class="number">3</span>])</span><br></pre></td></tr></table></figure></p>
+<p>在对这两个函数讲解之前，我们先统一一下定义:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.shape</span><br><span class="line">torch.Size([a,b,c])</span><br></pre></td></tr></table></figure></p>
+<p>这里我们说a是第一个维度（表示第一个维度的数量是a），b是第二个维度（表示第一个维度的数量是b），c是第三个维度（表示第三个维度的数量是c）。</p>
+<p>python中很多函数都是这样表示<strong>“维度”</strong>这个概念的,比如numpy.stack()。</p>
+<p>简而言之，unsqueeze（arg）是增添第arg个维度为1，以插入的形式填充。比如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = torch.rand(<span class="number">1</span>,<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.shape</span><br><span class="line">torch.Size([<span class="number">1</span>,<span class="number">3</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = a.unsqueeze(<span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.shape</span><br><span class="line">torch.Size([<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b</span><br><span class="line">tensor([[[<span class="number">0.6289</span>,<span class="number">0.0814</span>,<span class="number">0.9177</span>]]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a</span><br><span class="line">tensor([[<span class="number">0.6289</span>,<span class="number">0.0814</span>,<span class="number">0.9177</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = a.unsqueeze(<span class="number">0</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c.shape</span><br><span class="line">torch.Size([<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d = a.unsqueeze(<span class="number">2</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>d.shape</span><br><span class="line">torch.Size([<span class="number">1</span>,<span class="number">3</span>,<span class="number">1</span>])</span><br></pre></td></tr></table></figure></p>
+<p>相反，squeeze（arg）是删除第arg个维度(如果当前维度不为1，则不会进行删除)，比如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>d.shape</span><br><span class="line">torch.Size([<span class="number">1</span>,<span class="number">3</span>,<span class="number">1</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>e = d.squeeze(<span class="number">0</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>e.shape</span><br><span class="line">torch.Size([<span class="number">3</span>,<span class="number">1</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>e</span><br><span class="line">tensor([[<span class="number">0</span>,<span class="number">6289</span>],</span><br><span class="line">		[<span class="number">0.0814</span>],</span><br><span class="line">        [<span class="number">0.9177</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f = d.squeeze(<span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f.shape</span><br><span class="line">torch.Size([<span class="number">1</span>,<span class="number">3</span>,<span class="number">1</span>])</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     
@@ -381,313 +379,38 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/09/Pytorch中的torch-cat-函数/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangjiansen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/touxiang.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeason">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/09/Pytorch中的torch-cat-函数/" itemprop="url">Pytorch中的torch.cat()函数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-09T11:53:00+08:00">
-                2019-02-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/Pytorch/" rel="tag"># Pytorch</a>
           
-
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
+      
 
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
+      
       
       
 
       
-        
-          
-          cat是concatnate的意思：拼接，联系在一起。
-
-先说cat( )的普通用法如果我们有两个tensor是A和B，想把他们拼接在一起，需要如下操作：12C = torch.cat( (A,B),0 )  #按维数0拼接（竖着拼）C = torch.cat( (A,B),1 )  #按维数1拼接
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/09/Pytorch中的torch-cat-函数/#more" rel="contents">
-              Read more &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/09/Pytorch中的torch-cat-函数/" rel="next" title="Pytorch中的torch.cat()函数">
+                <i class="fa fa-chevron-left"></i> Pytorch中的torch.cat()函数
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
 
-    
+          <span class="post-nav-divider"></span>
 
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/01/今天我发布了新的博客/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wangjiansen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/touxiang.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jeason">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/01/今天我发布了新的博客/" itemprop="url">Pytorch中的自动求导函数backward()所需参数的含义</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-01T19:53:00+08:00">
-                2019-02-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/深度学习/" itemprop="url" rel="index">
-                    <span itemprop="name">深度学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-          正常来说backward( )函数是要传入参数的，一直没弄明白backward需要传入的参数具体含义，但是没关系，生命在与折腾，咱们来折腾一下，嘿嘿。
-对标量自动求导首先，如果out.backward()中的out是一个标量的话（相当于一个神经网络有一个样本，这个样本有两个属性，神经网络有一个输出）
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/02/01/今天我发布了新的博客/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -697,10 +420,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -708,6 +432,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -947,6 +675,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
