@@ -83,18 +83,18 @@
 
 
 
-<meta name="description" content="在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如：123&amp;gt;&amp;gt;&amp;gt; a = torch.rand(3)&amp;gt;&amp;gt;&amp;gt; a.shapetorch.Size([3]) 注意这里的a的shape是[3] ，既不是 [1,3] 也不是 [3,1]。这就说明它既不是行向量也不是列向量，只是一个数">
+<meta name="description" content="在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如： 123&amp;gt;&amp;gt;&amp;gt; a = torch.rand(3)&amp;gt;&amp;gt;&amp;gt; a.shapetorch.Size([3]) 注意这里的a的shape是[3] ，既不是 [1,3] 也不是 [3,1]。这就说明它既不是行向量也不是列向量，只是一个">
 <meta name="keywords" content="深度学习,Pytorch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pytorch中的squeeze()和unsqueeze()函数">
 <meta property="og:url" content="http://yoursite.com/2019/02/14/Pytorch中的squeeze-和unsqueeze-函数/index.html">
 <meta property="og:site_name" content="Jeason">
-<meta property="og:description" content="在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如：123&amp;gt;&amp;gt;&amp;gt; a = torch.rand(3)&amp;gt;&amp;gt;&amp;gt; a.shapetorch.Size([3]) 注意这里的a的shape是[3] ，既不是 [1,3] 也不是 [3,1]。这就说明它既不是行向量也不是列向量，只是一个数">
+<meta property="og:description" content="在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如： 123&amp;gt;&amp;gt;&amp;gt; a = torch.rand(3)&amp;gt;&amp;gt;&amp;gt; a.shapetorch.Size([3]) 注意这里的a的shape是[3] ，既不是 [1,3] 也不是 [3,1]。这就说明它既不是行向量也不是列向量，只是一个">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-14T15:08:56.798Z">
+<meta property="og:updated_time" content="2019-02-15T12:56:17.614Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pytorch中的squeeze()和unsqueeze()函数">
-<meta name="twitter:description" content="在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如：123&amp;gt;&amp;gt;&amp;gt; a = torch.rand(3)&amp;gt;&amp;gt;&amp;gt; a.shapetorch.Size([3]) 注意这里的a的shape是[3] ，既不是 [1,3] 也不是 [3,1]。这就说明它既不是行向量也不是列向量，只是一个数">
+<meta name="twitter:description" content="在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如： 123&amp;gt;&amp;gt;&amp;gt; a = torch.rand(3)&amp;gt;&amp;gt;&amp;gt; a.shapetorch.Size([3]) 注意这里的a的shape是[3] ，既不是 [1,3] 也不是 [3,1]。这就说明它既不是行向量也不是列向量，只是一个">
 
 
 
@@ -356,7 +356,8 @@
       
 
       
-        <p>在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = torch.rand(<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.shape</span><br><span class="line">torch.Size([<span class="number">3</span>])</span><br></pre></td></tr></table></figure></p>
+        <p>在numpy库中，经常会出现“秩为1的一维数组”（come from 吴恩达的深度学习，目前还没有搞清楚numpy中如此设计的意图）。比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = torch.rand(<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.shape</span><br><span class="line">torch.Size([<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
 <p>注意这里的a的shape是[3] ，既不是 [1,3] 也不是 [3,1]。这就说明它既不是行向量也不是列向量，只是一个数组。</p>
 <p>但是我们可以用squeeze（）和unsqueeze（）对其进行操作，比如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = torch.rand(<span class="number">3</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.shape</span><br><span class="line">torch.Size([<span class="number">3</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = a.unsqueeze(<span class="number">1</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.shape</span><br><span class="line">torch.Size([<span class="number">3</span>,<span class="number">1</span>])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c = a.unsqueeze(<span class="number">0</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c.shape</span><br><span class="line">torch.Size([<span class="number">1</span>,<span class="number">3</span>])</span><br></pre></td></tr></table></figure></p>
 <p>在对这两个函数讲解之前，我们先统一一下定义:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.shape</span><br><span class="line">torch.Size([a,b,c])</span><br></pre></td></tr></table></figure></p>
