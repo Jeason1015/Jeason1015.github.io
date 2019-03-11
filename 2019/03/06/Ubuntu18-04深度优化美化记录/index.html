@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/touxiang.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/touxiang.jpeg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Ubuntu,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="喜欢Ubuntu的一个好处就是相比win来说Linux可以更方便的对系统进行一些修改，而且安装很多东西很方便，相比mac可以充分利用硬件（mac没有N卡，配置深度学习的时候不能用显卡跑代码）。作为一个颜控，最重要的当然是Ubuntu界面很舒服很漂亮～～～～ 自从接触了Ubuntu之后就开始了折腾之旅，装双系统、分区、熟悉操作命令、配置环境、美化界面等等，对于一个小白来说，过程还是很艰辛的。很早之前">
+<meta name="keywords" content="Ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu18.04优化美化踩坑记录">
+<meta property="og:url" content="http://yoursite.com/2019/03/06/Ubuntu18-04深度优化美化记录/index.html">
+<meta property="og:site_name" content="Jeason">
+<meta property="og:description" content="喜欢Ubuntu的一个好处就是相比win来说Linux可以更方便的对系统进行一些修改，而且安装很多东西很方便，相比mac可以充分利用硬件（mac没有N卡，配置深度学习的时候不能用显卡跑代码）。作为一个颜控，最重要的当然是Ubuntu界面很舒服很漂亮～～～～ 自从接触了Ubuntu之后就开始了折腾之旅，装双系统、分区、熟悉操作命令、配置环境、美化界面等等，对于一个小白来说，过程还是很艰辛的。很早之前">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/1551882733053e20g5ch1.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/15522844561275dy9kcqr.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/155228503484977x5u7hx.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/15522852680780r86m0x4.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/1552285785716gkp0uxkt.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/1552287263049pdn693h7.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/1552287282315a7iv4l90.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/1552287303431u0eypfwp.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/1552287733566g9awxuzk.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/1552287756764fm7vkhef.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/1552288086414pvvuovid.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/1552288198053bau0lac8.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/15522883163578g57l1rd.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/1552288361110729ljj4t.png?imageslim">
+<meta property="og:image" content="http://pn6jskzmw.bkt.clouddn.com/15522889013094iaya3up.png?imageslim">
+<meta property="og:updated_time" content="2019-03-11T07:58:19.902Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu18.04优化美化踩坑记录">
+<meta name="twitter:description" content="喜欢Ubuntu的一个好处就是相比win来说Linux可以更方便的对系统进行一些修改，而且安装很多东西很方便，相比mac可以充分利用硬件（mac没有N卡，配置深度学习的时候不能用显卡跑代码）。作为一个颜控，最重要的当然是Ubuntu界面很舒服很漂亮～～～～ 自从接触了Ubuntu之后就开始了折腾之旅，装双系统、分区、熟悉操作命令、配置环境、美化界面等等，对于一个小白来说，过程还是很艰辛的。很早之前">
+<meta name="twitter:image" content="http://pn6jskzmw.bkt.clouddn.com/1551882733053e20g5ch1.png?imageslim">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/06/Ubuntu18-04深度优化美化记录/">
+
+
+
+
+
+  <title>Ubuntu18.04优化美化踩坑记录 | Jeason</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jeason</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/06/Ubuntu18-04深度优化美化记录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王建森">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeason">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Ubuntu18.04优化美化踩坑记录</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T21:14:00+08:00">
+                2019-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Ubuntu/" itemprop="url" rel="index">
+                    <span itemprop="name">Ubuntu</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>喜欢Ubuntu的一个好处就是相比win来说Linux可以更方便的对系统进行一些修改，而且安装很多东西很方便，相比mac可以充分利用硬件（mac没有N卡，配置深度学习的时候不能用显卡跑代码）。作为一个颜控，最重要的当然是Ubuntu界面很舒服很漂亮～～～～</p>
+<p>自从接触了Ubuntu之后就开始了折腾之旅，装双系统、分区、熟悉操作命令、配置环境、美化界面等等，对于一个小白来说，过程还是很艰辛的。很早之前就想把折腾的过程记录下来了，但是太懒啦，哈哈哈。这两天室友刚开始用Ubuntu，激励我记录一下，文章大概可以分成：<strong>显卡配置和电源管理</strong>、<strong>美化系统主题</strong>、<strong>美化grub启动项</strong>、<strong>基础命令操作</strong>，这几个大部分。</p>
+<hr>
+<h1 id="显卡配置和电源管理"><a href="#显卡配置和电源管理" class="headerlink" title="显卡配置和电源管理"></a>显卡配置和电源管理</h1><p>我的电脑是小米，刚装Ubuntu的时候真的是为发烧而生，风扇声音比我散热器的声音都大，非常hot并且导致续航时间严重缩短（当初我换新电脑的时候可主要因为原来电脑续航不够哇），上网查原因主要是显卡驱动问题和Ubuntn没有win那么好的电源管理导致的。所以主要从这两个方面入手。</p>
+<h2 id="TLP电源管理软件"><a href="#TLP电源管理软件" class="headerlink" title="TLP电源管理软件"></a>TLP电源管理软件</h2><p>首先TLP是免费的，可以减少电脑发热量和增加笔记本电池使用时间的电源管理工具。它是轻量级的工具，没有GUI，不用进行大量配置，一般的电脑使用默认配置就可以了。但是默认的配置会导致系统把显卡驱动切换到集成显卡上，所以一会我们还要管理一下显卡的驱动，首先介绍tlp的安装，随后介绍tlp的配置文件各代表了什么含义。</p>
+<h3 id="tlp的安装"><a href="#tlp的安装" class="headerlink" title="tlp的安装"></a>tlp的安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">添加PPA：</span><br><span class="line">sudo add-apt-repository ppa:linrunner/tlp</span><br><span class="line">更新软件列表：</span><br><span class="line">sudo apt-get update</span><br><span class="line">安装TLP：</span><br><span class="line">sudo apt install tlp</span><br><span class="line">启动TLP：</span><br><span class="line">sudo tlp start</span><br><span class="line">&gt;&gt;&gt; TLP started in AC mode.</span><br></pre></td></tr></table></figure>
+<h3 id="tlp的配置文件"><a href="#tlp的配置文件" class="headerlink" title="tlp的配置文件"></a>tlp的配置文件</h3><p>现在 TLP 已经被启动起来了，而且已经设置好了节省电池所需要的默认配置。我们可以查看该配置文件。文件路径为 /etc/default/tlp。我们需要编辑该文件来修改各项配置。配置的一些示例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br></pre></td><td class="code"><pre><span class="line"># ------------------------------------------------------------------------------</span><br><span class="line"># tlp - Parameters for power save</span><br><span class="line"># See full explanation: http://linrunner.de/en/tlp/docs/tlp-configuration.html</span><br><span class="line"></span><br><span class="line"># Hint: some features are disabled by default, remove the leading # to enable      #通过去掉“#”来开启参数</span><br><span class="line"># them.</span><br><span class="line"></span><br><span class="line"># Set to 0 to disable, 1 to enable TLP.    #设置为‘“1”启用TLP服务</span><br><span class="line">TLP_ENABLE=1</span><br><span class="line"></span><br><span class="line"># Operation mode when no power supply can be detected: AC, BAT</span><br><span class="line"># Concerns some desktop and embedded hardware only.</span><br><span class="line">TLP_DEFAULT_MODE=AC</span><br><span class="line"></span><br><span class="line"># Seconds laptop mode has to wait after the disk goes idle before doing a sync.</span><br><span class="line"># Non-zero value enables, zero disables laptop mode.</span><br><span class="line">DISK_IDLE_SECS_ON_AC=0</span><br><span class="line">DISK_IDLE_SECS_ON_BAT=2</span><br><span class="line"></span><br><span class="line"># Dirty page values (timeouts in secs).</span><br><span class="line">MAX_LOST_WORK_SECS_ON_AC=30</span><br><span class="line">MAX_LOST_WORK_SECS_ON_BAT=90</span><br><span class="line"></span><br><span class="line"># Hint: CPU parameters below are disabled by default, remove the leading #</span><br><span class="line"># to enable them, otherwise kernel default values are used.</span><br><span class="line"></span><br><span class="line"># Select a CPU frequency scaling governor.                      #CPU调度策略</span><br><span class="line"># Intel Core i processor with intel_pstate driver:</span><br><span class="line">#   powersave(*), performance</span><br><span class="line"># Older hardware with acpi-cpufreq driver:</span><br><span class="line">#   ondemand(*), powersave, performance, conservative</span><br><span class="line"># (*) is recommended.</span><br><span class="line"># Hint: use tlp-stat -p to show the active driver and available governors.</span><br><span class="line"># Important:</span><br><span class="line">#   You *must* disable your distribution&apos;s governor settings or conflicts will</span><br><span class="line">#   occur. ondemand is sufficient for *almost all* workloads, you should know</span><br><span class="line">#   what you&apos;re doing!</span><br><span class="line">CPU_SCALING_GOVERNOR_ON_AC=powersave</span><br><span class="line">CPU_SCALING_GOVERNOR_ON_BAT=powersave</span><br><span class="line"></span><br><span class="line"># Set the min/max frequency available for the scaling governor.</span><br><span class="line"># Possible values strongly depend on your CPU. For available frequencies see</span><br><span class="line"># the output of tlp-stat -p.</span><br><span class="line">#CPU_SCALING_MIN_FREQ_ON_AC=0</span><br><span class="line">#CPU_SCALING_MAX_FREQ_ON_AC=0</span><br><span class="line">#CPU_SCALING_MIN_FREQ_ON_BAT=0</span><br><span class="line">#CPU_SCALING_MAX_FREQ_ON_BAT=0</span><br><span class="line"></span><br><span class="line"># Set Intel P-state performance: 0..100 (%)</span><br><span class="line"># Limit the max/min P-state to control the power dissipation of the CPU.</span><br><span class="line"># Values are stated as a percentage of the available performance.</span><br><span class="line"># Requires an Intel Core i processor with intel_pstate driver.</span><br><span class="line">CPU_MIN_PERF_ON_AC=0</span><br><span class="line">CPU_MAX_PERF_ON_AC=100</span><br><span class="line">CPU_MIN_PERF_ON_BAT=0</span><br><span class="line">CPU_MAX_PERF_ON_BAT=30</span><br><span class="line"></span><br><span class="line"># Set the CPU &quot;turbo boost&quot; feature: 0=disable, 1=allow       #开启intel cpu 睿频</span><br><span class="line"># Requires an Intel Core i processor.</span><br><span class="line"># Important:</span><br><span class="line"># - This may conflict with your distribution&apos;s governor settings</span><br><span class="line"># - A value of 1 does *not* activate boosting, it just allows it</span><br><span class="line">CPU_BOOST_ON_AC=1</span><br><span class="line">CPU_BOOST_ON_BAT=1</span><br><span class="line"></span><br><span class="line"># Minimize number of used CPU cores/hyper-threads under light load conditions        #与cpu有关</span><br><span class="line">SCHED_POWERSAVE_ON_AC=0</span><br><span class="line">SCHED_POWERSAVE_ON_BAT=1</span><br><span class="line"></span><br><span class="line"># Kernel NMI Watchdog:</span><br><span class="line">#   0=disable (default, saves power), 1=enable (for kernel debugging only)</span><br><span class="line">NMI_WATCHDOG=0</span><br><span class="line"></span><br><span class="line"># Change CPU voltages aka &quot;undervolting&quot; - Kernel with PHC patch required     #调节CPU 电压以达到节能的目的 ，谨慎开启！！！</span><br><span class="line"># Frequency voltage pairs are written to:</span><br><span class="line">#   /sys/devices/system/cpu/cpu0/cpufreq/phc_controls</span><br><span class="line"># CAUTION: only use this, if you thoroughly understand what you are doing!</span><br><span class="line">#PHC_CONTROLS=&quot;F:V F:V F:V F:V&quot;</span><br><span class="line"></span><br><span class="line"># Set CPU performance versus energy savings policy:              #与CPU有关</span><br><span class="line">#   performance, normal, powersave</span><br><span class="line"># Requires kernel module msr and x86_energy_perf_policy from linux-tools</span><br><span class="line">ENERGY_PERF_POLICY_ON_AC=normal</span><br><span class="line">ENERGY_PERF_POLICY_ON_BAT=powersave</span><br><span class="line"></span><br><span class="line"># Hard disk devices; separate multiple devices with spaces (default: sda).</span><br><span class="line"># Devices can be specified by disk ID also (lookup with: tlp diskid).</span><br><span class="line">DISK_DEVICES=&quot;sda sdb&quot;</span><br><span class="line"></span><br><span class="line"># Hard disk advanced power management level: 1..254, 255 (max saving, min, off)</span><br><span class="line"># Levels 1..127 may spin down the disk; 255 allowable on most drives.</span><br><span class="line"># Separate values for multiple disks with spaces. Use the special value &apos;keep&apos;</span><br><span class="line"># to keep the hardware default for the particular disk.</span><br><span class="line">DISK_APM_LEVEL_ON_AC=&quot;254 254&quot;</span><br><span class="line">DISK_APM_LEVEL_ON_BAT=&quot;128 128&quot;</span><br><span class="line"></span><br><span class="line"># Hard disk spin down timeout:</span><br><span class="line">#   0:        spin down disabled</span><br><span class="line">#   1..240:   timeouts from 5s to 20min (in units of 5s)</span><br><span class="line">#   241..251: timeouts from 30min to 5.5 hours (in units of 30min)</span><br><span class="line"># See &apos;man hdparm&apos; for details.</span><br><span class="line"># Separate values for multiple disks with spaces. Use the special value &apos;keep&apos;</span><br><span class="line"># to keep the hardware default for the particular disk.</span><br><span class="line">#DISK_SPINDOWN_TIMEOUT_ON_AC=&quot;0 0&quot;</span><br><span class="line">#DISK_SPINDOWN_TIMEOUT_ON_BAT=&quot;0 0&quot;</span><br><span class="line"></span><br><span class="line"># Select IO scheduler for the disk devices: cfq, deadline, noop (Default: cfq);     #选择磁盘驱动器I/O调度方式，建议deadline</span><br><span class="line"># Separate values for multiple disks with spaces. Use the special value &apos;keep&apos;</span><br><span class="line"># to keep the kernel default scheduler for the particular disk.</span><br><span class="line">DISK_IOSCHED=&quot;deadline cfq&quot;</span><br><span class="line"></span><br><span class="line"># SATA aggressive link power management (ALPM):</span><br><span class="line">#   min_power, medium_power, max_performance</span><br><span class="line">SATA_LINKPWR_ON_AC=max_performance</span><br><span class="line">SATA_LINKPWR_ON_BAT=min_power</span><br><span class="line"></span><br><span class="line"># Exclude SATA host devices from link power management.</span><br><span class="line"># Separate multiple hosts with spaces.</span><br><span class="line">#SATA_LINKPWR_BLACKLIST=&quot;host1&quot;</span><br><span class="line"></span><br><span class="line"># Runtime Power Management for AHCI controllers and disks:      #请谨慎开启，有可能导致磁盘被锁或者数据丢失</span><br><span class="line">#   on=disable, auto=enable</span><br><span class="line"># EXPERIMENTAL ** WARNING: auto will most likely cause system lockups/data loss</span><br><span class="line">#AHCI_RUNTIME_PM_ON_AC=on</span><br><span class="line">#AHCI_RUNTIME_PM_ON_BAT=on</span><br><span class="line"></span><br><span class="line"># Seconds of inactivity before disk is suspended</span><br><span class="line">AHCI_RUNTIME_PM_TIMEOUT=15</span><br><span class="line"></span><br><span class="line"># PCI Express Active State Power Management (PCIe ASPM):</span><br><span class="line">#   default, performance, powersave</span><br><span class="line">PCIE_ASPM_ON_AC=performance</span><br><span class="line">PCIE_ASPM_ON_BAT=powersave</span><br><span class="line"></span><br><span class="line"># Radeon graphics clock speed (profile method): low, mid, high, auto, default;      #NVIDIA显卡用户请无视或者禁用</span><br><span class="line"># auto = mid on BAT, high on AC; default = use hardware defaults.</span><br><span class="line"># (Kernel &gt;= 2.6.35 only, open-source radeon driver explicitly)</span><br><span class="line">#RADEON_POWER_PROFILE_ON_AC=high</span><br><span class="line">#RADEON_POWER_PROFILE_ON_BAT=low</span><br><span class="line"></span><br><span class="line"># Radeon dynamic power management method (DPM): battery, performance        #NVIDIA显卡用户请无视或者禁用</span><br><span class="line"># (Kernel &gt;= 3.11 only, requires boot option radeon.dpm=1)</span><br><span class="line">#RADEON_DPM_STATE_ON_AC=performance</span><br><span class="line">#RADEON_DPM_STATE_ON_BAT=battery</span><br><span class="line"></span><br><span class="line"># Radeon DPM performance level: auto, low, high; auto is recommended .           #NVIDIA显卡用户请无视或者禁用</span><br><span class="line">#RADEON_DPM_PERF_LEVEL_ON_AC=auto</span><br><span class="line">#RADEON_DPM_PERF_LEVEL_ON_BAT=auto</span><br><span class="line"></span><br><span class="line"># WiFi power saving mode: on=enable, off=disable; not supported by all adapters.</span><br><span class="line">WIFI_PWR_ON_AC=off</span><br><span class="line">WIFI_PWR_ON_BAT=on</span><br><span class="line"></span><br><span class="line"># Disable wake on LAN: Y/N                 #禁用WOL</span><br><span class="line">WOL_DISABLE=N</span><br><span class="line"></span><br><span class="line"># Enable audio power saving for Intel HDA, AC97 devices (timeout in secs).     #与音频有关</span><br><span class="line"># A value of 0 disables, &gt;=1 enables power save.</span><br><span class="line">SOUND_POWER_SAVE_ON_AC=0</span><br><span class="line">SOUND_POWER_SAVE_ON_BAT=1</span><br><span class="line"></span><br><span class="line"># Disable controller too (HDA only): Y/N            #与音频有关</span><br><span class="line">SOUND_POWER_SAVE_CONTROLLER=Y</span><br><span class="line"></span><br><span class="line"># Set to 1 to power off optical drive in UltraBay/MediaBay when running on</span><br><span class="line"># battery. A value of 0 disables this feature (Default).</span><br><span class="line"># Drive can be powered on again by releasing (and reinserting) the eject lever</span><br><span class="line"># or by pressing the disc eject button on newer models.</span><br><span class="line"># Note: an UltraBay/MediaBay hard disk is never powered off.</span><br><span class="line">BAY_POWEROFF_ON_BAT=0</span><br><span class="line"># Optical drive device to power off (default sr0).</span><br><span class="line">BAY_DEVICE=&quot;sr0&quot;</span><br><span class="line"></span><br><span class="line"># Runtime Power Management for PCI(e) bus devices: on=disable, auto=enable</span><br><span class="line">RUNTIME_PM_ON_AC=on</span><br><span class="line">RUNTIME_PM_ON_BAT=auto</span><br><span class="line"></span><br><span class="line"># Runtime PM for *all* PCI(e) bus devices, except blacklisted ones:</span><br><span class="line">#   0=disable, 1=enable</span><br><span class="line">RUNTIME_PM_ALL=1</span><br><span class="line"></span><br><span class="line"># Exclude PCI(e) device adresses the following list from Runtime PM</span><br><span class="line"># (separate with spaces). Use lspci to get the adresses (1st column).</span><br><span class="line">#RUNTIME_PM_BLACKLIST=&quot;bb:dd.f 11:22.3 44:55.6&quot;</span><br><span class="line"></span><br><span class="line"># Exclude PCI(e) devices assigned to the listed drivers from Runtime PM</span><br><span class="line"># (should prevent accidential power on of hybrid graphics&apos; discrete part).</span><br><span class="line"># Default is &quot;radeon nouveau&quot;; use &quot;&quot; to disable the feature completely.</span><br><span class="line"># Separate multiple drivers with spaces.</span><br><span class="line">RUNTIME_PM_DRIVER_BLACKLIST=&quot;radeon nouveau&quot;</span><br><span class="line"></span><br><span class="line"># Set to 0 to disable, 1 to enable USB autosuspend feature.</span><br><span class="line">USB_AUTOSUSPEND=1</span><br><span class="line"></span><br><span class="line"># Exclude listed devices from USB autosuspend (separate with spaces).</span><br><span class="line"># Use lsusb to get the ids.</span><br><span class="line"># Note: input devices (usbhid) are excluded automatically (see below)</span><br><span class="line">#USB_BLACKLIST=&quot;1111:2222 3333:4444&quot;</span><br><span class="line"></span><br><span class="line"># WWAN devices are excluded from USB autosuspend: 0=do not exclude / 1=exclude</span><br><span class="line">USB_BLACKLIST_WWAN=1</span><br><span class="line"></span><br><span class="line"># Include listed devices into USB autosuspend even if already excluded</span><br><span class="line"># by the driver or WWAN blacklists above (separate with spaces).</span><br><span class="line"># Use lsusb to get the ids.</span><br><span class="line">#USB_WHITELIST=&quot;1111:2222 3333:4444&quot;</span><br><span class="line"></span><br><span class="line"># Set to 1 to disable autosuspend before shutdown, 0 to do nothing</span><br><span class="line"># (workaround for USB devices that cause shutdown problems).</span><br><span class="line">#USB_AUTOSUSPEND_DISABLE_ON_SHUTDOWN=1</span><br><span class="line"></span><br><span class="line"># Restore radio device state (Bluetooth, WiFi, WWAN) from previous shutdown</span><br><span class="line"># on system startup: 0=disable, 1=enable.</span><br><span class="line"># Hint: the parameters DEVICES_TO_DISABLE/ENABLE_ON_STARTUP/SHUTDOWN below</span><br><span class="line">#   are ignored when this is enabled!</span><br><span class="line">RESTORE_DEVICE_STATE_ON_STARTUP=0</span><br><span class="line"></span><br><span class="line"># Radio devices to disable on startup: bluetooth, wifi, wwan.</span><br><span class="line"># Separate multiple devices with spaces.</span><br><span class="line">#DEVICES_TO_DISABLE_ON_STARTUP=&quot;bluetooth wifi wwan&quot;</span><br><span class="line"></span><br><span class="line"># Radio devices to enable on startup: bluetooth, wifi, wwan.</span><br><span class="line"># Separate multiple devices with spaces.</span><br><span class="line">#DEVICES_TO_ENABLE_ON_STARTUP=&quot;wifi&quot;</span><br><span class="line"></span><br><span class="line"># Radio devices to disable on shutdown: bluetooth, wifi, wwan</span><br><span class="line"># (workaround for devices that are blocking shutdown).</span><br><span class="line">#DEVICES_TO_DISABLE_ON_SHUTDOWN=&quot;bluetooth wifi wwan&quot;</span><br><span class="line"></span><br><span class="line"># Radio devices to enable on shutdown: bluetooth, wifi, wwan</span><br><span class="line"># (to prevent other operating systems from missing radios).</span><br><span class="line">#DEVICES_TO_ENABLE_ON_SHUTDOWN=&quot;wwan&quot;</span><br><span class="line"></span><br><span class="line"># Radio devices to enable on AC: bluetooth, wifi, wwan</span><br><span class="line">#DEVICES_TO_ENABLE_ON_AC=&quot;bluetooth wifi wwan&quot;</span><br><span class="line"></span><br><span class="line"># Radio devices to disable on battery: bluetooth, wifi, wwan</span><br><span class="line">#DEVICES_TO_DISABLE_ON_BAT=&quot;bluetooth wifi wwan&quot;</span><br><span class="line"></span><br><span class="line"># Radio devices to disable on battery when not in use (not connected):</span><br><span class="line"># bluetooth, wifi, wwan</span><br><span class="line">#DEVICES_TO_DISABLE_ON_BAT_NOT_IN_USE=&quot;bluetooth wifi wwan&quot;</span><br><span class="line"></span><br><span class="line"># Battery charge thresholds (ThinkPad only, tp-smapi or acpi-call kernel module             #ThinkPad笔记本使用，其它品牌谨慎开启</span><br><span class="line"># required). Charging starts when the remaining capacity falls below the</span><br><span class="line"># START_CHARGE_THRESH value and stops when exceeding the STOP_CHARGE_THRESH value.</span><br><span class="line"># Main / Internal battery (values in %)</span><br><span class="line">#START_CHARGE_THRESH_BAT0=75</span><br><span class="line">#STOP_CHARGE_THRESH_BAT0=80</span><br><span class="line"># Ultrabay / Slice / Replaceable battery (values in %)</span><br><span class="line">#START_CHARGE_THRESH_BAT1=75</span><br><span class="line">#STOP_CHARGE_THRESH_BAT1=80</span><br><span class="line"></span><br><span class="line"># ------------------------------------------------------------------------------</span><br><span class="line"># tlp-rdw - Parameters for the radio device wizard</span><br><span class="line"># Possible devices: bluetooth, wifi, wwan</span><br><span class="line"></span><br><span class="line"># Hints:</span><br><span class="line"># - Parameters are disabled by default, remove the leading # to enable them.</span><br><span class="line"># - Separate multiple radio devices with spaces.</span><br><span class="line"></span><br><span class="line"># Radio devices to disable on connect.</span><br><span class="line">#DEVICES_TO_DISABLE_ON_LAN_CONNECT=&quot;wifi wwan&quot;</span><br><span class="line">#DEVICES_TO_DISABLE_ON_WIFI_CONNECT=&quot;wwan&quot;</span><br><span class="line">#DEVICES_TO_DISABLE_ON_WWAN_CONNECT=&quot;wifi&quot;</span><br><span class="line"></span><br><span class="line"># Radio devices to enable on disconnect.</span><br><span class="line">#DEVICES_TO_ENABLE_ON_LAN_DISCONNECT=&quot;wifi wwan&quot;</span><br><span class="line">#DEVICES_TO_ENABLE_ON_WIFI_DISCONNECT=&quot;&quot;</span><br><span class="line">#DEVICES_TO_ENABLE_ON_WWAN_DISCONNECT=&quot;&quot;</span><br><span class="line"></span><br><span class="line"># Radio devices to enable/disable when docked.</span><br><span class="line">#DEVICES_TO_ENABLE_ON_DOCK=&quot;&quot;</span><br><span class="line">#DEVICES_TO_DISABLE_ON_DOCK=&quot;&quot;</span><br><span class="line"></span><br><span class="line"># Radio devices to enable/disable when undocked.</span><br><span class="line">#DEVICES_TO_ENABLE_ON_UNDOCK=&quot;wifi&quot;</span><br><span class="line">#DEVICES_TO_DISABLE_ON_UNDOCK=&quot;&quot;</span><br></pre></td></tr></table></figure></p>
+<p>我主要是在cpu那个部分做了一些调整，一个i7的电脑，硬生生被调成了i5的性能，我真的是后悔当时没直接买i5。更详细的信息可以参考<a href="https://linrunner.de/en/tlp/tlp.html" target="_blank" rel="noopener">官方文档</a>.</p>
+<h2 id="显卡配置"><a href="#显卡配置" class="headerlink" title="显卡配置"></a>显卡配置</h2><p>因为跑深度学习的代码需要用很多N卡配置，而默认不使用tlp的话电脑会很热，用了tlp系统会自动的把显卡切换到intel的集成显卡，这个问题一开始苦恼了我好久。其实ubuntu里面可以手动切换显卡的。前提是需要正确安装电脑对应的显卡，我们需要在N卡的驱动附加软件里面实现这个显卡切换功能。ps.Linux上显卡驱动真的是个大坑~<img src="http://pn6jskzmw.bkt.clouddn.com/1551882733053e20g5ch1.png?imageslim" alt="paste image">可以看到我现在用的是intel的集成显卡，而实际上我是有N卡的。</p>
+<h3 id="正确安装对应驱动"><a href="#正确安装对应驱动" class="headerlink" title="正确安装对应驱动"></a>正确安装对应驱动</h3><p>如果我们刚安装完ubuntu新系统的话，我们正常在上图看到的显卡类型应该是<strong>nouveau</strong>的驱动，nouveau是一个自由及开放源代码显卡驱动程序，是为Nvidia的显示卡所编写，也可用于属于系统芯片的NVIDIA Tegra系列，该项目的目标为利用逆向工程Nvidia的专有Linux驱动程序来创造一个开放源代码的驱动程序，所以nouveau开源驱动基本上是不能正常使用的。<br>首先查看电脑目前有什么显卡，使用如下命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lspci | grep VGA     # 查看集成显卡</span><br><span class="line">lspci | grep NVIDIA  # 查看NVIDIA显卡</span><br></pre></td></tr></table></figure></p>
+<p>我的电脑是小米pro，可以看出显卡是GeForce MX150的。<br><img src="http://pn6jskzmw.bkt.clouddn.com/15522844561275dy9kcqr.png?imageslim" alt="paste image"></p>
+<p>下面查看应该安装什么版本的驱动，如下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ubuntu-drivers devices   # 查询所有ubuntu推荐的驱动</span><br></pre></td></tr></table></figure>
+<p>可以看出ubutnu提示我应该安装390版本的驱动。<img src="http://pn6jskzmw.bkt.clouddn.com/155228503484977x5u7hx.png?imageslim" alt="paste image"></p>
+<p>然后就可以使用下面条命令安装所有推荐的驱动程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ubuntu-drivers autoinstall</span><br></pre></td></tr></table></figure>
+<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install nvidia-390</span><br></pre></td></tr></table></figure></p>
+<p>安装完成后重启，在<strong>软件和更新</strong>中我们可以看到已经安装了哪些驱动：<br><img src="http://pn6jskzmw.bkt.clouddn.com/15522852680780r86m0x4.png?imageslim" alt="paste image"><br>可以看到我已经安装了390和nouveau这两个驱动，勾选390那个就行。</p>
+<h3 id="切换显卡"><a href="#切换显卡" class="headerlink" title="切换显卡"></a>切换显卡</h3><p>随后我们就可以使用使用nvidia-settings命令了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-settings</span><br></pre></td></tr></table></figure></p>
+<p>我们可以在这里选择我们要使用哪个显卡，切换之后reboot就好了。<br><img src="http://pn6jskzmw.bkt.clouddn.com/1552285785716gkp0uxkt.png?imageslim" alt="paste image"></p>
+<p>还有最后一点注意的！！！！！！！！！！！！！</p>
+<p><strong>如果安装cuda的话，一定不再选择安装驱动，要不然就前功尽弃啦！！！</strong></p>
+<h1 id="美化系统主题"><a href="#美化系统主题" class="headerlink" title="美化系统主题"></a>美化系统主题</h1><p>作为一个颜控党，主题这种东西如果不和为空是万万不可以的。<br>从ubuntu17.10开始，官方又开始使用gnome作为默认的桌面环境，意味着我们可以轻松的使用GNOME Shell扩展了，美滋滋。先放几张图：<br><img src="http://pn6jskzmw.bkt.clouddn.com/1552287263049pdn693h7.png?imageslim" alt="paste image"></p>
+<p><img src="http://pn6jskzmw.bkt.clouddn.com/1552287282315a7iv4l90.png?imageslim" alt="paste image"></p>
+<p><img src="http://pn6jskzmw.bkt.clouddn.com/1552287303431u0eypfwp.png?imageslim" alt="paste image">搞了个北欧风，十分舒服～～</p>
+<p>首先我们要安装GNOME Tweak Tool。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gnome-tweak-tool</span><br></pre></td></tr></table></figure>
+<p>安装之后你就能找到这个东西：</p>
+<p><img src="http://pn6jskzmw.bkt.clouddn.com/1552287733566g9awxuzk.png?imageslim" alt="paste image"><br>打开：<img src="http://pn6jskzmw.bkt.clouddn.com/1552287756764fm7vkhef.png?imageslim" alt="paste image"></p>
+<p>在这里可以配置不同的外观，也可以安装不同的扩展小插件，在这里我已经安装好配置主题需要的扩展了，正常来说我们需要先安装User themes这个扩展。<br><img src="http://pn6jskzmw.bkt.clouddn.com/1552288086414pvvuovid.png?imageslim" alt="paste image"><br>我们可通过chrome来方便的安装任何扩展，首先我们需要在chrome里面安装GNOME的小程序：!<img src="http://pn6jskzmw.bkt.clouddn.com/1552288198053bau0lac8.png?imageslim" alt="paste image"></p>
+<p>随后浏览器打开<a href="https://extensions.gnome.org/" target="_blank" rel="noopener">https://extensions.gnome.org/</a> 安装这个扩展：<br><img src="http://pn6jskzmw.bkt.clouddn.com/15522883163578g57l1rd.png?imageslim" alt="paste image"><br>点进去，把开关调成on状态就好了：<br><img src="http://pn6jskzmw.bkt.clouddn.com/1552288361110729ljj4t.png?imageslim" alt="paste image"><br>随后我们就能使用主题包来装饰我们的系统了。</p>
+<p>对于Gnome桌面，你最需要连接的就是这个<a href="https://www.gnome-look.org/" target="_blank" rel="noopener">网站</a>，它提供了包括主题、图标、字体等在内的很多包。<br>因为在上述中安装了User Themes 扩展，所以我们可以把下载好的主题放置在自己的家目录下，为此，在家目录下的.local/share中新建themes、fonts、icons 三个文件夹，分别存放主题、字体和图标 。下载我们喜欢的主题和图标之后（一般是一个压缩包），我们需要把压缩包放到对应的文件夹里，并且进行解压缩，这里提供几个常用的命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//解压</span><br><span class="line">$ xz -d node-v6.10.1-linux-x64.tar.xz</span><br><span class="line">$ tar -xvf node-v6.10.1-linux-x64.tar</span><br><span class="line"></span><br><span class="line">//移动文件</span><br><span class="line">cp -r 文件 ~/.local/share/icons</span><br><span class="line"></span><br><span class="line">//本机gnome主题、字体、图标地址(https://www.gnome-look.org/)</span><br><span class="line">~/.local/share/themes</span><br><span class="line">~/.local/share/fonts</span><br><span class="line">~/.local/share/icons</span><br></pre></td></tr></table></figure></p>
+<p>上面的步骤完成后，我们就可以在这里进行修改了：<img src="http://pn6jskzmw.bkt.clouddn.com/15522889013094iaya3up.png?imageslim" alt="paste image"></p>
+<h1 id="美化grub启动项"><a href="#美化grub启动项" class="headerlink" title="美化grub启动项"></a>美化grub启动项</h1><p>个人是不太喜欢紫色的，尤其开机grub引导项的那个基佬紫，这的受不了啊，要想个办法改一下。<br>这个部分我主要参考的是这个<a href="https://blog.csdn.net/w84963568/article/details/78884003" target="_blank" rel="noopener">博主</a>的文章，所以不过多的介绍了。</p>
+<h1 id="基础命令操作"><a href="#基础命令操作" class="headerlink" title="基础命令操作"></a>基础命令操作</h1><p>未完待续。。。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/20/Untitled/" rel="next" title="Untitledsd fs">
+                <i class="fa fa-chevron-left"></i> Untitledsd fs
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/touxiang.jpeg" alt="王建森">
+            
+              <p class="site-author-name" itemprop="name">王建森</p>
+              <p class="site-description motion-element" itemprop="description">一名挣扎在视觉领域的CS小僧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Jeason1015" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://weibo.com/生煎地瓜干" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-globe"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#显卡配置和电源管理"><span class="nav-number">1.</span> <span class="nav-text">显卡配置和电源管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TLP电源管理软件"><span class="nav-number">1.1.</span> <span class="nav-text">TLP电源管理软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tlp的安装"><span class="nav-number">1.1.1.</span> <span class="nav-text">tlp的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tlp的配置文件"><span class="nav-number">1.1.2.</span> <span class="nav-text">tlp的配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#显卡配置"><span class="nav-number">1.2.</span> <span class="nav-text">显卡配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正确安装对应驱动"><span class="nav-number">1.2.1.</span> <span class="nav-text">正确安装对应驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#切换显卡"><span class="nav-number">1.2.2.</span> <span class="nav-text">切换显卡</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#美化系统主题"><span class="nav-number">2.</span> <span class="nav-text">美化系统主题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#美化grub启动项"><span class="nav-number">3.</span> <span class="nav-text">美化grub启动项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础命令操作"><span class="nav-number">4.</span> <span class="nav-text">基础命令操作</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王建森(sen873591769@163.com)</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
