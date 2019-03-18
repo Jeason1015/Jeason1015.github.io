@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/touxiang.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/touxiang.jpeg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Pytorch,深度学习,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jeason" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="正常来说backward( )函数是要传入参数的，一直没弄明白backward需要传入的参数具体含义，但是没关系，生命在与折腾，咱们来折腾一下，嘿嘿。 对标量自动求导首先，如果out.backward()中的out是一个标量的话（相当于一个神经网络有一个样本，这个样本有两个属性，神经网络有一个输出）那么此时我的backward函数是不需要输入任何参数的。1234567891011121314imp">
+<meta name="keywords" content="Pytorch,深度学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch中的自动求导函数backward()所需参数的含义">
+<meta property="og:url" content="http://yoursite.com/2019/02/01/今天我发布了新的博客/index.html">
+<meta property="og:site_name" content="Jeason">
+<meta property="og:description" content="正常来说backward( )函数是要传入参数的，一直没弄明白backward需要传入的参数具体含义，但是没关系，生命在与折腾，咱们来折腾一下，嘿嘿。 对标量自动求导首先，如果out.backward()中的out是一个标量的话（相当于一个神经网络有一个样本，这个样本有两个属性，神经网络有一个输出）那么此时我的backward函数是不需要输入任何参数的。1234567891011121314imp">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/pasted-3.png">
+<meta property="og:image" content="http://yoursite.com/images/pasted-4.png">
+<meta property="og:image" content="http://yoursite.com/images/pasted-5.png">
+<meta property="og:image" content="http://yoursite.com/images/pasted-6.png">
+<meta property="og:image" content="http://yoursite.com/images/pasted-7.png">
+<meta property="og:image" content="http://yoursite.com/images/pasted-8.png">
+<meta property="og:updated_time" content="2019-03-18T16:31:04.383Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pytorch中的自动求导函数backward()所需参数的含义">
+<meta name="twitter:description" content="正常来说backward( )函数是要传入参数的，一直没弄明白backward需要传入的参数具体含义，但是没关系，生命在与折腾，咱们来折腾一下，嘿嘿。 对标量自动求导首先，如果out.backward()中的out是一个标量的话（相当于一个神经网络有一个样本，这个样本有两个属性，神经网络有一个输出）那么此时我的backward函数是不需要输入任何参数的。1234567891011121314imp">
+<meta name="twitter:image" content="http://yoursite.com/images/pasted-3.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/01/今天我发布了新的博客/">
+
+
+
+
+
+  <title>Pytorch中的自动求导函数backward()所需参数的含义 | Jeason</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jeason</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/01/今天我发布了新的博客/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王建森">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeason">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Pytorch中的自动求导函数backward()所需参数的含义</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-01T19:53:00+08:00">
+                2019-02-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>正常来说backward( )函数是要传入参数的，一直没弄明白backward需要传入的参数具体含义，但是没关系，生命在与折腾，咱们来折腾一下，嘿嘿。</p>
+<h1 id="对标量自动求导"><a href="#对标量自动求导" class="headerlink" title="对标量自动求导"></a>对标量自动求导</h1><p>首先，如果out.backward()中的out是一个标量的话（相当于一个神经网络有一个样本，这个样本有两个属性，神经网络有一个输出）那么此时我的backward函数是不需要输入任何参数的。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line">    </span><br><span class="line">a = Variable(torch.Tensor([<span class="number">2</span>,<span class="number">3</span>]),requires_grad=<span class="keyword">True</span>)</span><br><span class="line">b = a + <span class="number">3</span></span><br><span class="line">c = b * <span class="number">3</span></span><br><span class="line">out = c.mean()</span><br><span class="line">out.backward()</span><br><span class="line">print(<span class="string">'input:'</span>)</span><br><span class="line">print(a.data)</span><br><span class="line">print(<span class="string">'output:'</span>)</span><br><span class="line">print(out.data.item())</span><br><span class="line">print(<span class="string">'input gradients are:'</span>)</span><br><span class="line">print(a.grad)</span><br></pre></td></tr></table></figure></p>
+<p>运行结果：<br><img src="/images/pasted-3.png" alt="upload successful"><br>不难看出，我们构建了这样的一个函数：<br>$$out=3[(a_1+3)+(a_2+3)]\over2$$<br>所以其求导也很容易看出：<br>$${\partial out \over \partial a_1}={\partial out \over \partial a_2 }={3\over2}  $$<br>这是对其进行标量自动求导的结果.</p>
+<h1 id="对向量自动求导"><a href="#对向量自动求导" class="headerlink" title="对向量自动求导"></a>对向量自动求导</h1><p>如果out.backward()中的out是一个向量（或者理解成1xN的矩阵）的话，我们对向量进行自动求导，看看会发生什么？</p>
+<p>先构建这样的一个模型（相当于一个神经网络有一个样本，这个样本有两个属性，神经网络有两个输出）：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line">    </span><br><span class="line">a = Variable(torch.Tensor([[<span class="number">2.</span>,<span class="number">4.</span>]]),requires_grad=<span class="keyword">True</span>)</span><br><span class="line">b = torch.zeros(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">b[<span class="number">0</span>,<span class="number">0</span>] = a[<span class="number">0</span>,<span class="number">0</span>] ** <span class="number">2</span> </span><br><span class="line">b[<span class="number">0</span>,<span class="number">1</span>] = a[<span class="number">0</span>,<span class="number">1</span>] ** <span class="number">3</span> </span><br><span class="line">out = <span class="number">2</span> * b</span><br><span class="line"><span class="comment">#其参数要传入和out维度一样的矩阵</span></span><br><span class="line">out.backward(torch.FloatTensor([[<span class="number">1.</span>,<span class="number">1.</span>]]))</span><br><span class="line">print(<span class="string">'input:'</span>)</span><br><span class="line">print(a.data)</span><br><span class="line">print(<span class="string">'output:'</span>)</span><br><span class="line">print(out.data)</span><br><span class="line">print(<span class="string">'input gradients are:'</span>)</span><br><span class="line">print(a.grad)</span><br></pre></td></tr></table></figure></p>
+<p>模型也很简单，不难看出out求导出来的雅克比应该是：<br>$$\begin{pmatrix}<br>{\partial out_1 \over \partial a_1}=4a_1&amp;{\partial out_1 \over \partial a_2}=0\\<br>{\partial out_2 \over \partial a_1}=0&amp;{\partial out_2 \over \partial a_2}=6a_2^2\\<br>\end{pmatrix}$$</p>
+<p>因为a1 = 2，a2 = 4，所以上面的矩阵应该是:$\begin{pmatrix}<br>8&amp;0\\<br>0&amp;96\\<br>\end{pmatrix}<br>$<br>运行的结果：<br><img src="/images/pasted-4.png" alt="upload successful"><br>嗯，的确是8和96，但是仔细想一想，和咱们想要的雅克比矩阵的形式也不一样啊。难道是backward自动把0给省略了？</p>
+<p>咱们继续试试，这次在上一个模型的基础上进行小修改，如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line">    </span><br><span class="line">a = Variable(torch.Tensor([[<span class="number">2.</span>,<span class="number">4.</span>]]),requires_grad=<span class="keyword">True</span>)</span><br><span class="line">b = torch.zeros(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">b[<span class="number">0</span>,<span class="number">0</span>] = a[<span class="number">0</span>,<span class="number">0</span>] ** <span class="number">2</span> + a[<span class="number">0</span>,<span class="number">1</span>] </span><br><span class="line">b[<span class="number">0</span>,<span class="number">1</span>] = a[<span class="number">0</span>,<span class="number">1</span>] ** <span class="number">3</span> + a[<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">out = <span class="number">2</span> * b</span><br><span class="line"><span class="comment">#其参数要传入和out维度一样的矩阵</span></span><br><span class="line">out.backward(torch.FloatTensor([[<span class="number">1.</span>,<span class="number">1.</span>]]))</span><br><span class="line">print(<span class="string">'input:'</span>)</span><br><span class="line">print(a.data)</span><br><span class="line">print(<span class="string">'output:'</span>)</span><br><span class="line">print(out.data)</span><br><span class="line">print(<span class="string">'input gradients are:'</span>)</span><br><span class="line">print(a.grad)</span><br></pre></td></tr></table></figure></p>
+<p>可以看出这个模型的雅克比应该是：<br>$$\begin{pmatrix}<br>{\partial out_1 \over \partial a_1}=4a_1&amp;{\partial out_1 \over \partial a_2}=2\\<br>{\partial out_2 \over \partial a_1}=2&amp;{\partial out_2 \over \partial a_2}=6a_2^2\\<br>\end{pmatrix}$$<br>运行一下：<br><img src="/images/pasted-5.png" alt="upload successful"><br>等等，什么鬼？正常来说不应该是$\begin{pmatrix}<br>8&amp;2\\<br>2&amp;96\\<br>\end{pmatrix}<br>$么？<br>我是谁？我再哪？为什么就给我2个数，而且是  8 + 2 = 10 ，96 + 2 = 98 。难道都是加的 2 ？<br>想一想，刚才咱们backward中传的参数是 [ [ 1 , 1 ] ]，难道安装这个关系对应求和了？<br>咱们换个参数来试一试，程序中只更改传入的参数为[ [ 1 , 2 ] ]：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line">    </span><br><span class="line">a = Variable(torch.Tensor([[<span class="number">2.</span>,<span class="number">4.</span>]]),requires_grad=<span class="keyword">True</span>)</span><br><span class="line">b = torch.zeros(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">b[<span class="number">0</span>,<span class="number">0</span>] = a[<span class="number">0</span>,<span class="number">0</span>] ** <span class="number">2</span> + a[<span class="number">0</span>,<span class="number">1</span>] </span><br><span class="line">b[<span class="number">0</span>,<span class="number">1</span>] = a[<span class="number">0</span>,<span class="number">1</span>] ** <span class="number">3</span> + a[<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">out = <span class="number">2</span> * b</span><br><span class="line"><span class="comment">#其参数要传入和out维度一样的矩阵</span></span><br><span class="line">out.backward(torch.FloatTensor([[<span class="number">1.</span>,<span class="number">2.</span>]]))</span><br><span class="line">print(<span class="string">'input:'</span>)</span><br><span class="line">print(a.data)</span><br><span class="line">print(<span class="string">'output:'</span>)</span><br><span class="line">print(out.data)</span><br><span class="line">print(<span class="string">'input gradients are:'</span>)</span><br><span class="line">print(a.grad)</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/pasted-6.png" alt="upload successful"><br>嗯，这回可以理解了，我们传入的参数，是对原来模型正常求导出来的雅克比矩阵进行线性操作，可以把我们传进的参数（设为arg）看成一个列向量，那么我们得到的结果就是:<br>${({M_{Jacobo}}{M_{arg}})}^T$<br>在这个题目中，我们得到的实际是：<br>$$\begin{cases}<br>{1*{\partial out_1 \over \partial a_1}}+{2*{\partial out_1 \over \partial a_2}}=12\\<br>{1*{\partial out_2 \over \partial a_1}}+{2*{\partial out_2 \over \partial a_2}}=12\\<br>\end{cases}<br>$$<br>看起来一切完美的解释了，但是就在我刚刚打字的一刻，我意识到官方文档中说k.backward()传入的参数应该和k具有相同的维度，所以如果按上述去解释是解释不通的。<br>哪里出问题了呢？</p>
+<p>仔细看了一下，原来是这样的：在对雅克比矩阵进行线性操作的时候，应该把我们传进的参数（设为arg）看成一个行向量（不是列向量），那么我们得到的结果就是:${({M_{arg}}{M_{Jacobo}})}^T$<br>也就是：<br>$$\begin{cases}<br>{1*{\partial out_1 \over \partial a_1}}+{2*{\partial out_2 \over \partial a_1}}=12\\<br>{1*{\partial out_1 \over \partial a_2}}+{2*{\partial out_2 \over \partial a_2}}=12\\<br>\end{cases}<br>$$<br>这回我们就解释的通了。</p>
+<p>现在我们来输出一下雅克比矩阵吧，为了不引起歧义，我们让雅克比矩阵的每个数值都不一样（一开始分析错了就是因为雅克比矩阵中有相同的数据），所以模型小改动如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line">    </span><br><span class="line">a = Variable(torch.Tensor([[<span class="number">2.</span>,<span class="number">4.</span>]]),requires_grad=<span class="keyword">True</span>)</span><br><span class="line">b = torch.zeros(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">b[<span class="number">0</span>,<span class="number">0</span>] = a[<span class="number">0</span>,<span class="number">0</span>] ** <span class="number">2</span> + a[<span class="number">0</span>,<span class="number">1</span>] </span><br><span class="line">b[<span class="number">0</span>,<span class="number">1</span>] = a[<span class="number">0</span>,<span class="number">1</span>] ** <span class="number">3</span> + a[<span class="number">0</span>,<span class="number">0</span>] * <span class="number">2</span></span><br><span class="line">out = <span class="number">2</span> * b</span><br><span class="line"><span class="comment">#其参数要传入和out维度一样的矩阵</span></span><br><span class="line">out.backward(torch.FloatTensor([[<span class="number">1</span>,<span class="number">0</span>]]),retain_graph=<span class="keyword">True</span>)</span><br><span class="line">A_temp = copy.deepcopy(a.grad)</span><br><span class="line">a.grad.zero_()</span><br><span class="line">out.backward(torch.FloatTensor([[<span class="number">0</span>,<span class="number">1</span>]]))</span><br><span class="line">B_temp = a.grad</span><br><span class="line">print(<span class="string">'jacobian matrix is:'</span>)</span><br><span class="line">print(torch.cat( (A_temp,B_temp),<span class="number">0</span> ))</span><br></pre></td></tr></table></figure></p>
+<p>如果没问题的话咱们的雅克比矩阵应该是 [ [ 8 , 2 ] , [ 4 , 96 ] ]</p>
+<p>好了，下面是见证奇迹的时刻了,不要眨眼睛奥，千万不要眨眼睛……<br>3<br>2<br>1<br>砰…………<br><img src="/images/pasted-7.png" alt="upload successful"><br>好了，现在总结一下：因为经过了复杂的神经网络之后，out中每个数值都是由很多输入样本的属性（也就是输入数据）线性或者非线性组合而成的，那么out中的每个数值和输入数据的每个数值都有关联，也就是说【out】中的每个数都可以对【a】中每个数求导，那么我们backward（）的参数[k1,k2,k3….kn]的含义就是：</p>
+<p>$$\begin{cases}<br>{\partial out \over \partial a_1}={k_1*{\partial out_1 \over \partial a_1}}+{k_2*{\partial out_2 \over \partial a_1}}+{k_3*{\partial out_3 \over \partial a_1}}+…+{k_n*{\partial out_n \over \partial a_1}}\\<br>{\partial out \over \partial a_2}={k_1*{\partial out_1 \over \partial a_2}}+{k_2*{\partial out_2 \over \partial a_2}}+{k_3*{\partial out_3 \over \partial a_2}}+…+{k_n*{\partial out_n \over \partial a_2}}\\<br>…\\<br>{\partial out \over \partial a_n}={k_1*{\partial out_1 \over \partial a_n}}+{k_2*{\partial out_2 \over \partial a_n}}+{k_3*{\partial out_3 \over \partial a_n}}+…+{k_n*{\partial out_n \over \partial a_n}}\\<br>\end{cases}<br>$$<br>也可以理解成每个out分量对an求导时的权重。</p>
+<h1 id="对矩阵自动求导"><a href="#对矩阵自动求导" class="headerlink" title="对矩阵自动求导"></a>对矩阵自动求导</h1><p>现在，如果out是一个矩阵呢？<br>下面的例子也可以理解为：相当于一个神经网络有两个样本，每个样本有两个属性，神经网络有两个输出。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</span><br><span class="line"><span class="keyword">from</span> torch <span class="keyword">import</span> nn</span><br><span class="line"></span><br><span class="line">a = Variable(torch.FloatTensor([[<span class="number">2</span>,<span class="number">3</span>],[<span class="number">1</span>,<span class="number">2</span>]]),requires_grad=<span class="keyword">True</span>)</span><br><span class="line">w = Variable( torch.zeros(<span class="number">2</span>,<span class="number">1</span>),requires_grad=<span class="keyword">True</span> )</span><br><span class="line">out = torch.mm(a,w)</span><br><span class="line">out.backward(torch.FloatTensor([[<span class="number">1.</span>],[<span class="number">1.</span>]]),retain_graph=<span class="keyword">True</span>)</span><br><span class="line">print(<span class="string">"gradients are:&#123;&#125;"</span>.format(w.grad.data))</span><br></pre></td></tr></table></figure></p>
+<p>如果前面的例子理解了，那么这个也很好理解，backward输入的参数k是一个2x1的矩阵，2代表的就是样本数量，就是在前面的基础上，再对每个样本进行加权求和。<br>结果是：</p>
+<p><img src="/images/pasted-8.png" alt="upload successful"></p>
+<p>如果有兴趣，也可以拓展一下多个样本的多分类问题，猜一下k的维度应该是【输入样本的个数 X 分类的个数】</p>
+<p>好啦，纠结我好久的pytorch自动求导原理算是彻底搞懂啦~~~</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Pytorch/" rel="tag"># Pytorch</a>
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/09/Pytorch中的torch-cat-函数/" rel="prev" title="Pytorch中的torch.cat()函数">
+                Pytorch中的torch.cat()函数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/touxiang.jpeg" alt="王建森">
+            
+              <p class="site-author-name" itemprop="name">王建森</p>
+              <p class="site-description motion-element" itemprop="description">一名挣扎在视觉领域的CS小僧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Jeason1015" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://weibo.com/生煎地瓜干" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-globe"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#对标量自动求导"><span class="nav-number">1.</span> <span class="nav-text">对标量自动求导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对向量自动求导"><span class="nav-number">2.</span> <span class="nav-text">对向量自动求导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对矩阵自动求导"><span class="nav-number">3.</span> <span class="nav-text">对矩阵自动求导</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王建森(sen873591769@163.com)</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>

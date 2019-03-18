@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/touxiang.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/touxiang.jpeg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Pytorch,深度学习,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jeason" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="分类问题中，交叉熵函数是比较常用也是比较基础的损失函数，原来就是了解，但一直搞不懂他是怎么来的？为什么交叉熵能够表征真实样本标签和预测概率之间的差值？趁着这次学习把这些概念系统学习了一下。 交叉熵的数学原理首先说起交叉熵，脑子里就会出现这个东西：$$L=-[y\log{\hat{y}}+(1-y)\log{(1-\hat{y})}]$$随后我们脑子里可能还会出现Sigmoid()这个函数:$${g">
+<meta name="keywords" content="Pytorch,深度学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="交叉熵的数学原理及应用——Pytorch中的CrossEntropyLoss()函数">
+<meta property="og:url" content="http://yoursite.com/2019/02/15/交叉熵的数学原理及应用——Pytorch中的CrossEntropyLoss()函数/index.html">
+<meta property="og:site_name" content="Jeason">
+<meta property="og:description" content="分类问题中，交叉熵函数是比较常用也是比较基础的损失函数，原来就是了解，但一直搞不懂他是怎么来的？为什么交叉熵能够表征真实样本标签和预测概率之间的差值？趁着这次学习把这些概念系统学习了一下。 交叉熵的数学原理首先说起交叉熵，脑子里就会出现这个东西：$$L=-[y\log{\hat{y}}+(1-y)\log{(1-\hat{y})}]$$随后我们脑子里可能还会出现Sigmoid()这个函数:$${g">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/pasted-10.png">
+<meta property="og:image" content="http://yoursite.com/images/pasted-11.png">
+<meta property="og:image" content="http://yoursite.com/images/pasted-12.png">
+<meta property="og:updated_time" content="2019-03-18T16:31:04.383Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="交叉熵的数学原理及应用——Pytorch中的CrossEntropyLoss()函数">
+<meta name="twitter:description" content="分类问题中，交叉熵函数是比较常用也是比较基础的损失函数，原来就是了解，但一直搞不懂他是怎么来的？为什么交叉熵能够表征真实样本标签和预测概率之间的差值？趁着这次学习把这些概念系统学习了一下。 交叉熵的数学原理首先说起交叉熵，脑子里就会出现这个东西：$$L=-[y\log{\hat{y}}+(1-y)\log{(1-\hat{y})}]$$随后我们脑子里可能还会出现Sigmoid()这个函数:$${g">
+<meta name="twitter:image" content="http://yoursite.com/images/pasted-10.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/15/交叉熵的数学原理及应用——Pytorch中的CrossEntropyLoss()函数/">
+
+
+
+
+
+  <title>交叉熵的数学原理及应用——Pytorch中的CrossEntropyLoss()函数 | Jeason</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jeason</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/15/交叉熵的数学原理及应用——Pytorch中的CrossEntropyLoss()函数/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王建森">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeason">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">交叉熵的数学原理及应用——Pytorch中的CrossEntropyLoss()函数</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-15T18:47:00+08:00">
+                2019-02-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/深度学习/" itemprop="url" rel="index">
+                    <span itemprop="name">深度学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>分类问题中，交叉熵函数是比较常用也是比较基础的损失函数，原来就是了解，但一直搞不懂他是怎么来的？为什么交叉熵能够表征真实样本标签和预测概率之间的差值？趁着这次学习把这些概念系统学习了一下。</p>
+<h1 id="交叉熵的数学原理"><a href="#交叉熵的数学原理" class="headerlink" title="交叉熵的数学原理"></a>交叉熵的数学原理</h1><p>首先说起交叉熵，脑子里就会出现这个东西：<br>$$L=-[y\log{\hat{y}}+(1-y)\log{(1-\hat{y})}]<br>$$<br>随后我们脑子里可能还会出现Sigmoid()这个函数:<br>$$<br>{g(s)}=\frac{1}{1+e^{-s}}<br>$$<br>pytorch中的CrossEntropyLoss()函数实际就是先把输出结果进行sigmoid，随后再放到传统的交叉熵函数中，就会得到结果。<br>那我们就先从sigmoid开始说起，我们知道sigmoid的作用其实是把前一层的输入映射到0~1这个区间上，可以认为上一层某个样本的输入数据越大，就代表这个样本标签属于1的概率就越大，反之，上一层某样本的输入数据越小，这个样本标签属于0的概率就越大，而且通过sigmoid函数的图像我们可以看出来，随着输入数值的增大，其对概率增大的作用效果是逐渐减弱的，反之同理，这就是非线性映射的一个好处，让模型对处于中间范围的输入数据更敏感。下面是sigmoid函数图：</p>
+<p><img src="/images/pasted-10.png" width="40%" height="50%"></p>
+<p>既然经过sigmoid之后的数据能表示样本所属某个标签的概率，那么举个例子，我们模型预测某个样本标签为1的概率是：<br>$$<br>\hat{y}=P(y=1|x)<br>$$<br>那么自然的，这个样本标签不为1的概率是：<br>$$<br>1-\hat{y}=P(y=0|x)<br>$$<br>从极大似然的角度来说就是：<br>$$<br>P(y|x)=\hat{y}^{y}(1-\hat{y})^{1-y}<br>$$</p>
+<p>上式可以理解为，某一个样本x，我们通过模型预测出其属于样本标签为y的概率，因为y是我们给的正确结果，所以我们当然希望上式越大越好。</p>
+<p>下一步我们要在<strong>P(y|x)</strong>  的外面套上一层log函数，相当于进行了一次非线性的映射。log函数是不会改变单调性的，所以我们也希望<strong>log(P(y|x))</strong> 越大越好。<br>$$<br>\log{(P(y|x))}=\log{(\hat{y}^{y}(1-\hat{y})^{1-y})}=y\log{\hat{y}}+(1-y)\log{(1-\hat{y})}<br>$$<br>这样，就得到了我们一开始说的交叉熵的形式了，但是等一等，好像还差一个符号。</p>
+<p>因为一般来说我们相用上述公式做loss函数来使用，所以我们想要loss越小越好，这样符合我们的直观理解，所以我们只要<strong>-log(P(y|x))</strong> 就达到了我们的目的。<br>$$<br>L=-[y\log{\hat{y}}+(1-y)\log{(1-\hat{y})}]<br>$$<br>上面是二分类问题的交叉熵，如果是有多分类，就对每个标签类别下的可能概率分别求相应的负log对数然后求和就好了：<br>$$<br>L=-\sum_{i=1}^n y^{(i)}\log{\hat{y}^{(i)}}<br>$$<br>是不是突然也感觉有些理解了，(<em>^__^</em>) ……</p>
+<h1 id="Pytorch中的函数-CrossEntropyLoss"><a href="#Pytorch中的函数-CrossEntropyLoss" class="headerlink" title="Pytorch中的函数 CrossEntropyLoss()"></a>Pytorch中的函数 CrossEntropyLoss()</h1><p>上面是对交叉熵进行了推导，下面要结合pytorch中的函数 CrossEntropyLoss()  来说一说具体怎么使用了。</p>
+<p>举个小例子，假设我们有个一样本，他经过我们的神经网络后会输出一个5维的向量，分别代表这个样本分别属于这5种标签的数值（注意此时我们的5个数求和还并不等于1，需要先经过softmax处理，下面会说），我们还会从数据集中得到该样本的正确分类结果，下面我们要把经过神经网络的5维向量和正确的分类结果放到CrossEntropyLoss() 中，看看会发生什么：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line">loss = nn.CrossEntropyLoss()</span><br><span class="line">input = torch.randn(<span class="number">1</span>,<span class="number">5</span>,requires_grad=<span class="keyword">True</span>)</span><br><span class="line">target = torch.empty(<span class="number">1</span>,dtype=torch.long).random_(<span class="number">5</span>)</span><br><span class="line">output = loss(input,target)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"输入为5类："</span>)</span><br><span class="line">print(input)</span><br><span class="line">print(<span class="string">"要计算的loss的类别："</span>)</span><br><span class="line">print(target)</span><br><span class="line">print(<span class="string">"要计算的loss的结果："</span>)</span><br><span class="line">print(output)</span><br><span class="line"></span><br><span class="line">first = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>):</span><br><span class="line">	first -= input[i][target[i]]</span><br><span class="line">second = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>):</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">		second += math.exp(input[i][j])</span><br><span class="line">res = <span class="number">0</span></span><br><span class="line">res += first + printmath.log(second)</span><br><span class="line">print(<span class="string">"手动的计算结果"</span>)</span><br><span class="line">print(res)</span><br></pre></td></tr></table></figure></p>
+<p>看一看我们的input和target：</p>
+<p><img src="/images/pasted-11.png" width="90%" height="50%"></p>
+<p>可以看到我们的target就是一个只有一个数的数组形式（不是向量，不是矩阵，只是一个简单的数组，而且里面就一个数），input是一个5维的向量，但这，在计算交叉熵之前，我们需要先获得下面交叉熵公式的$\hat{y}^{(i)}$.<br>$$<br>L=-\sum_{i=1}^n y^{(i)}\log{\hat{y}^{(i)}}<br>$$<br>此处的$\hat{y}^{(i)}$需要我们将输入的input向量进行softmax处理，使得input变成对应属于每个标签的概率值，对每个<strong>input[i]</strong> 进行如下处理：<br>$$<br>\hat{y}=P(\hat{y}=i|x)=\frac{e^{input[i]}}{ \sum_{j=0}^ne^{input[j]} }<br>$$</p>
+<p>这样我们就得到了交叉熵公式中$\hat{y}^{(i)}$</p>
+<p>随后我们就可以把$\hat{y}^{(i)}$带入公式了，下面我们还缺$y^{(i)}$就可以了，而奇怪的是我们输入的target是一个只有一个数的数组啊，而$\hat{y}^{(i)}$是一个5维的向量，这什么情况？</p>
+<p>原来CrossEntropyLoss() 会把target变成ont-hot形式（网上别人说的，想等有时间去看看函数的源代码随后补充一下这里），我们现在例子的样本标签是【4】（从0开始计算）。那么转换成one-hot编码就是【0，0，0，0，1】，所以我们的$y^{(i)}$最后也会变成一个5维的向量的向量，并且不是该样本标签的数值为0，这样我们在计算交叉熵的时候只计算$y^{(i)}$给定的那一项的sorce就好了，所以我们的公式最后变成了：<br>$$<br>L(input,target)=-\log{\frac{e^{input[target]}}{ \sum_{j=0}^ne^{input[j]} }}=-input[target]+\log{(\sum_{j=0}^ne^{input[j]})}<br>$$</p>
+<p>好，安装上面我们的推导来运行一下程序：</p>
+<p><img src="/images/pasted-12.png" alt="upload successful"></p>
+<p>破发科特<del>~</del>~<br>开学快乐(<em>^__^</em>) ……</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Pytorch/" rel="tag"># Pytorch</a>
+          
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/14/Pytorch中的squeeze-和unsqueeze-函数/" rel="next" title="Pytorch中的squeeze()和unsqueeze()函数">
+                <i class="fa fa-chevron-left"></i> Pytorch中的squeeze()和unsqueeze()函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/06/Ubuntu18-04深度优化美化记录/" rel="prev" title="Ubuntu18.04优化美化踩坑记录">
+                Ubuntu18.04优化美化踩坑记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/touxiang.jpeg" alt="王建森">
+            
+              <p class="site-author-name" itemprop="name">王建森</p>
+              <p class="site-description motion-element" itemprop="description">一名挣扎在视觉领域的CS小僧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Jeason1015" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://weibo.com/生煎地瓜干" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-globe"></i>微博</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#交叉熵的数学原理"><span class="nav-number">1.</span> <span class="nav-text">交叉熵的数学原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pytorch中的函数-CrossEntropyLoss"><span class="nav-number">2.</span> <span class="nav-text">Pytorch中的函数 CrossEntropyLoss()</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王建森(sen873591769@163.com)</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
