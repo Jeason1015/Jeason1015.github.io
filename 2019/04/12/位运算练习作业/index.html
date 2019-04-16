@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/touxiang.jpeg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/touxiang.jpeg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Jeason" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="简介进一步理解书中第二章《信息的表示和处理》部分的内容,深刻理解整数、浮点数的表示和运算方法,掌握GNU GCC工具集的基本使用方法。 要求请按照要求补全 bits.c 中的函数,并进行验证。包括以下6个函数 : 1. int isAsciiDigit(int x)功能:当0x30&amp;lt;=x&amp;lt;=0x39时(即字符0-9的ASCII码值)返回1;其他情况下返回0示例:isAsciiDigit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="位运算练习_01">
+<meta property="og:url" content="http://yoursite.com/2019/04/12/位运算练习作业/index.html">
+<meta property="og:site_name" content="Jeason">
+<meta property="og:description" content="简介进一步理解书中第二章《信息的表示和处理》部分的内容,深刻理解整数、浮点数的表示和运算方法,掌握GNU GCC工具集的基本使用方法。 要求请按照要求补全 bits.c 中的函数,并进行验证。包括以下6个函数 : 1. int isAsciiDigit(int x)功能:当0x30&amp;lt;=x&amp;lt;=0x39时(即字符0-9的ASCII码值)返回1;其他情况下返回0示例:isAsciiDigit">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-04-16T16:06:33.382Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="位运算练习_01">
+<meta name="twitter:description" content="简介进一步理解书中第二章《信息的表示和处理》部分的内容,深刻理解整数、浮点数的表示和运算方法,掌握GNU GCC工具集的基本使用方法。 要求请按照要求补全 bits.c 中的函数,并进行验证。包括以下6个函数 : 1. int isAsciiDigit(int x)功能:当0x30&amp;lt;=x&amp;lt;=0x39时(即字符0-9的ASCII码值)返回1;其他情况下返回0示例:isAsciiDigit">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/12/位运算练习作业/">
+
+
+
+
+
+  <title>位运算练习_01 | Jeason</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jeason</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/12/位运算练习作业/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王建森">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/touxiang.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jeason">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">位运算练习_01</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T09:44:09+08:00">
+                2019-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>进一步理解书中第二章《信息的表示和处理》部分的内容,深刻理解整数、浮点数的表示<br>和运算方法,掌握GNU GCC工具集的基本使用方法。</p>
+<h1 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h1><p>请按照要求补全 bits.c 中的函数,并进行验证。包括以下6个函数 :</p>
+<h2 id="1-int-isAsciiDigit-int-x"><a href="#1-int-isAsciiDigit-int-x" class="headerlink" title="1. int isAsciiDigit(int x)"></a>1. int isAsciiDigit(int x)</h2><p>功能:当0x30&lt;=x&lt;=0x39时(即字符0-9的ASCII码值)返回1;其他情况下返回0<br>示例:isAsciiDigit(0x35) = 1<br>isAsciiDigit(0x3a) = 0<br>isAsciiDigit(0x05) = 0<br>难度:3<br>可使用运算符数:15<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isAsciiDigit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> up_num = x + (~<span class="number">58</span> + <span class="number">1</span>);  <span class="comment">//最高位为1</span></span><br><span class="line">  <span class="keyword">int</span> low_num = x + (~<span class="number">48</span> + <span class="number">1</span>);   <span class="comment">//最高位是0</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">int</span> Is_up_legal = (!((up_num &gt;&gt; <span class="number">31</span>) + <span class="number">1</span>));</span><br><span class="line">  <span class="keyword">int</span> Is_down_legal = ((low_num &gt;&gt; <span class="number">31</span>) + <span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span>   (Is_up_legal &amp; Is_down_legal);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">In this function, what we should <span class="keyword">to</span> do <span class="keyword">is</span> <span class="keyword">to</span> judge weather <span class="keyword">the</span> 'x' <span class="keyword">is</span> bigger than <span class="number">48</span>(inclusive) <span class="keyword">and</span> smaller than <span class="number">57</span>(inclusive). </span><br><span class="line"><span class="keyword">first</span>:</span><br><span class="line">we mapping <span class="keyword">the</span> legal-x:</span><br><span class="line">up_num = x <span class="number">-58</span>;     </span><br><span class="line">low_num = x - <span class="number">48</span>;</span><br><span class="line">we will <span class="keyword">get</span> (up_num &lt; <span class="number">0</span>) <span class="keyword">and</span> (low_num &gt;= <span class="number">0</span>) <span class="keyword">if</span> <span class="keyword">the</span> <span class="string">"x"</span> <span class="keyword">is</span> legal.</span><br><span class="line"><span class="keyword">then</span>:</span><br><span class="line"><span class="string">"(( up_num &gt;&gt; 31) + 1)"</span> will be <span class="keyword">equal</span> <span class="keyword">to</span> <span class="number">0</span> ,<span class="keyword">if</span> (up_num &lt; <span class="number">0</span>).</span><br><span class="line"><span class="string">"((low_num &gt;&gt; 31) + 1)"</span> will be <span class="keyword">equal</span> <span class="keyword">to</span> <span class="number">1</span> ,<span class="keyword">if</span> (low_num &gt;= <span class="number">0</span>).</span><br><span class="line">so,<span class="keyword">if</span> (up_num &lt; <span class="number">0</span>), <span class="string">"Is_up_legal"</span> will be <span class="keyword">equal</span> <span class="keyword">to</span> <span class="number">1.</span><span class="keyword">if</span> (low_num &gt;= <span class="number">0</span>),<span class="string">"Is_down_legal"</span> will be <span class="keyword">equal</span> <span class="keyword">to</span> <span class="number">1.</span></span><br><span class="line"><span class="keyword">last</span>:</span><br><span class="line">only <span class="keyword">if</span> ((up_num &gt;&gt; <span class="number">31</span>) + <span class="number">1</span>) == <span class="number">0</span> <span class="keyword">and</span> ((low_num &gt;&gt; <span class="number">31</span>) + <span class="number">1</span>), we <span class="literal">return</span> <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="2-int-anyEvenBit-int-x"><a href="#2-int-anyEvenBit-int-x" class="headerlink" title="2. int anyEvenBit(int x)"></a>2. int anyEvenBit(int x)</h2><p>功能:当x的任意偶数位为1时,返回1;其他情况下返回0<br>示例:anyEvenBit(0xA) = 0<br>anyEvenBit(0xE) = 1<br>难度:2<br>可使用运算符数:12<br><figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int anyEvenBit(int <span class="keyword">x</span>) &#123;</span><br><span class="line">  int <span class="keyword">x</span><span class="number">1</span> = <span class="keyword">x</span> &gt;&gt; <span class="number">8</span><span class="comment">;</span></span><br><span class="line"><span class="comment">  int x2 = x1 &gt;&gt; 8;</span></span><br><span class="line"><span class="comment">  int x3 = x2 &gt;&gt; 8;</span></span><br><span class="line"><span class="comment">  return !!( ( x | x1 | x2 | x3 )&amp; 0x55);</span></span><br><span class="line"><span class="comment">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">每次我们移动<span class="number">8</span>位，把移动的<span class="number">3</span>次结果和x一起做<span class="string">|运算，相当于把每8个信息都重叠到最低的8位，</span></span><br><span class="line">此时与<span class="number">01010101</span>做<span class="meta">&amp;运算就可以知道其偶数位是否是1.</span></span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<h2 id="3-int-copyLSB-int-x"><a href="#3-int-copyLSB-int-x" class="headerlink" title="3. int copyLSB(int x)"></a>3. int copyLSB(int x)</h2><p>功能:将返回值中的所有位全部置位成x中的第0位的值<br>示例:copyLSB(5) = 0xFFFFFFFF, copyLSB(6) = 0x00000000<br>难度:2<br>可使用运算符数:5<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">copyLSB</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> temp = x &amp; <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> (~temp + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"><span class="keyword">first</span>, we could <span class="keyword">get</span> least significant bit <span class="keyword">by</span> used <span class="string">"x &amp; 1"</span>.</span><br><span class="line"><span class="keyword">then</span>, we could <span class="keyword">get</span> <span class="literal">result</span> </span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<h2 id="4-int-leastBitPos-int-x"><a href="#4-int-leastBitPos-int-x" class="headerlink" title="4. int leastBitPos(int x)"></a>4. int leastBitPos(int x)</h2><p>功能:返回一个掩码,在该掩码中标识了二进制数x的所有位中,“1”所在的位权最小的位<br>示例:leastBitPos(0x60) = 0x20<br>难度:2<br>可使用运算符数:6</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">leastBitPos</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (~x+<span class="number">1</span>) &amp; x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">we <span class="keyword">get</span> <span class="keyword">the</span> <span class="string">"-x"</span>,than <span class="string">"(-x)&amp;x"</span> <span class="keyword">is</span> what we need.</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<h2 id="5-int-divpwr2-int-x-int-n"><a href="#5-int-divpwr2-int-x-int-n" class="headerlink" title="5. int divpwr2(int x, int n)"></a>5. int divpwr2(int x, int n)</h2><p>功能:计算 x / 2^n,并将结果取整<br>示例:divpwr2(15,1) = 7<br>divpwr2(-33,4) = -2<br>难度:2<br>可使用运算符数:15</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> divpwr2(<span class="built_in">int</span> x, <span class="built_in">int</span> <span class="built_in">n</span>) &#123;</span><br><span class="line">  <span class="built_in">int</span> op = (x &gt;&gt; <span class="number">31</span>) + <span class="number">1</span>;</span><br><span class="line">  <span class="built_in">int</span> temp  =   x  &gt;&gt; <span class="built_in">n</span>;</span><br><span class="line">  <span class="built_in">int</span> temp2 = temp &lt;&lt; <span class="built_in">n</span>;</span><br><span class="line">  <span class="built_in">int</span> Is_exact_division = !!(temp2 ^ x);</span><br><span class="line">  return (temp + (    (!op) &amp; (!!<span class="built_in">n</span>) &amp; (Is_exact_division)  )   );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">一般来说，“&gt;&gt;”符号代表 x/(<span class="number">2</span>^<span class="built_in">n</span>),并向下取整（无论正负）。</span><br><span class="line">所以有三种情况需要考虑：</span><br><span class="line">  如果负数，需要向上取整。</span><br><span class="line">  如果 <span class="built_in">n</span>=<span class="number">0</span> 应该为 x。</span><br><span class="line">  如果能够整除，就不需要取整操作。</span><br><span class="line"></span><br><span class="line">此题中，op是符号标志位，正数为<span class="number">1</span>，负数为<span class="number">0</span>.</span><br><span class="line">temp为x右移动<span class="built_in">n</span>位结果，相当直接 x/(<span class="number">2</span>^<span class="built_in">n</span>) ,向下取整。</span><br><span class="line">temp2为temp左移动<span class="built_in">n</span>位结果，利用(temp2 ^ x)，可以判断temp舍弃的几位是否都是<span class="number">0</span>（既能否整除）。</span><br><span class="line">Is_exact_division 代表如果能整除为<span class="number">0</span>，反之为<span class="number">1</span>。</span><br><span class="line">因为&gt;&gt;默认代表向下取整，所以我们需要考虑上述情况，利用 (!op) &amp; (!!<span class="built_in">n</span>) &amp; (Is_exact_division）实现，</span><br><span class="line">其含义：同时满足 (负数）(<span class="built_in">n</span>！=<span class="number">0</span>）(不能整除) 三种情况返回<span class="number">1</span>，否则返回<span class="number">0</span>。</span><br><span class="line">也意味着，满足上述三情况才需要在向下取整的前提+<span class="number">1</span>，否则向下取整结果就是正常取整结果。</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<h2 id="6-int-bitCount-int-x"><a href="#6-int-bitCount-int-x" class="headerlink" title="6. int bitCount(int x)"></a>6. int bitCount(int x)</h2><p>功能:计算二进制数x中,对应位值“1”的总位数 示例:bitCount(5) = 2<br>bitCount(7) = 3<br>难度:4<br>可使用运算符数:40</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">int bitCount(int x) &#123;</span><br><span class="line"></span><br><span class="line">  int mask = (<span class="number">0x11</span> &lt;&lt;<span class="number">24</span>) | (<span class="number">0x11</span> &lt;&lt; <span class="number">16</span>) | (<span class="number">0x11</span> &lt;&lt; <span class="number">8</span>) |(<span class="number">0x11</span>) ;</span><br><span class="line"></span><br><span class="line">  int temp = x &amp; mask;</span><br><span class="line">  x = x &gt;&gt; <span class="number">1</span>;</span><br><span class="line">  temp = temp + (x &amp; mask); </span><br><span class="line">  x = x &gt;&gt; <span class="number">1</span>;</span><br><span class="line">  temp = temp + (x &amp; mask); </span><br><span class="line">  x = x &gt;&gt; <span class="number">1</span>;</span><br><span class="line">  temp = temp + (x &amp; mask); </span><br><span class="line">  </span><br><span class="line">  return ((temp &amp; <span class="number">0xf</span>) + </span><br><span class="line">          ( (temp &gt;&gt; <span class="number">4</span>) &amp; <span class="number">0xf</span> )+ </span><br><span class="line">          ( (temp &gt;&gt; <span class="number">8</span>) &amp; <span class="number">0xf</span> )+</span><br><span class="line">          ( (temp &gt;&gt; <span class="number">12</span>) &amp; <span class="number">0xf</span> )+</span><br><span class="line">          ( (temp &gt;&gt; <span class="number">16</span>) &amp; <span class="number">0xf</span> )+</span><br><span class="line">          ( (temp &gt;&gt; <span class="number">20</span>) &amp; <span class="number">0xf</span> )+</span><br><span class="line">          ( (temp &gt;&gt; <span class="number">24</span>) &amp; <span class="number">0xf</span> )+</span><br><span class="line">          ( (temp &gt;&gt; <span class="number">28</span>) &amp; <span class="number">0xf</span> ));</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*首先分割成4块，每块右移动，同时比较每个块的1的个数*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="tip-程序内允许使用"><a href="#tip-程序内允许使用" class="headerlink" title="tip:程序内允许使用:"></a>tip:程序内允许使用:</h2><p>a. 运算符: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;<br>b. 范围在0 - 255之间的常数<br>c. 局部变量</p>
+<h2 id="tip-程序内禁止以下行为"><a href="#tip-程序内禁止以下行为" class="headerlink" title="tip:程序内禁止以下行为:"></a>tip:程序内禁止以下行为:</h2><p>a. 声明和使用全局变量<br>b. 声明和使用定义宏<br>c. 声明和调用其他的函数<br>d. 类型的强制转换<br>e. 使用许可范围之外的运算符<br>f . 使用控制跳转语句:if else switch do while for<br>注意:违背以上原则均视为程序不正确!!</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/19/hexo博客更换电脑操作踩坑记录/" rel="next" title="hexo博客更换电脑操作踩坑记录">
+                <i class="fa fa-chevron-left"></i> hexo博客更换电脑操作踩坑记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/touxiang.jpeg" alt="王建森">
+            
+              <p class="site-author-name" itemprop="name">王建森</p>
+              <p class="site-description motion-element" itemprop="description">一名挣扎在视觉领域的CS小僧</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Jeason1015" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://weibo.com/生煎地瓜干" target="_blank" title="微博">
+                      
+                        <i class="fa fa-fw fa-globe"></i>微博</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:sen873591769@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#要求"><span class="nav-number">2.</span> <span class="nav-text">要求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-int-isAsciiDigit-int-x"><span class="nav-number">2.1.</span> <span class="nav-text">1. int isAsciiDigit(int x)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-int-anyEvenBit-int-x"><span class="nav-number">2.2.</span> <span class="nav-text">2. int anyEvenBit(int x)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-int-copyLSB-int-x"><span class="nav-number">2.3.</span> <span class="nav-text">3. int copyLSB(int x)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-int-leastBitPos-int-x"><span class="nav-number">2.4.</span> <span class="nav-text">4. int leastBitPos(int x)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-int-divpwr2-int-x-int-n"><span class="nav-number">2.5.</span> <span class="nav-text">5. int divpwr2(int x, int n)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-int-bitCount-int-x"><span class="nav-number">2.6.</span> <span class="nav-text">6. int bitCount(int x)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tip-程序内允许使用"><span class="nav-number">2.7.</span> <span class="nav-text">tip:程序内允许使用:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tip-程序内禁止以下行为"><span class="nav-number">2.8.</span> <span class="nav-text">tip:程序内禁止以下行为:</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王建森(sen873591769@163.com)</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+  
+
+
+  
+
+  
+
+</body>
+</html>
