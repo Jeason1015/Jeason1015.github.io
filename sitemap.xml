@@ -9,13 +9,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/03/19/hexo%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%8D%A2%E7%94%B5%E8%84%91%E6%93%8D%E4%BD%9C%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/</loc>
-    
-    <lastmod>2019-04-17T15:51:20.887Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2019/03/06/Ubuntu18-04%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%8C%96%E7%BE%8E%E5%8C%96%E8%AE%B0%E5%BD%95/</loc>
     
     <lastmod>2019-04-12T01:15:25.591Z</lastmod>
@@ -58,14 +51,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/index.html</loc>
+    <loc>http://yoursite.com/about/index.html</loc>
     
     <lastmod>2019-03-18T16:31:04.383Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/about/index.html</loc>
+    <loc>http://yoursite.com/categories/index.html</loc>
     
     <lastmod>2019-03-18T16:31:04.383Z</lastmod>
     
