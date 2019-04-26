@@ -387,7 +387,7 @@
 <h3 id="正确安装对应驱动"><a href="#正确安装对应驱动" class="headerlink" title="正确安装对应驱动"></a>正确安装对应驱动</h3><p>如果我们刚安装完ubuntu新系统的话，我们正常在上图看到的显卡类型应该是<strong>nouveau</strong>的驱动，nouveau是一个自由及开放源代码显卡驱动程序，是为Nvidia的显示卡所编写，也可用于属于系统芯片的NVIDIA Tegra系列，该项目的目标为利用逆向工程Nvidia的专有Linux驱动程序来创造一个开放源代码的驱动程序，所以nouveau开源驱动基本上是不能正常使用的。<br>首先查看电脑目前有什么显卡，使用如下命令：<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lspci | <span class="keyword">grep</span> VGA     <span class="comment"># 查看集成显卡</span></span><br><span class="line">lspci | <span class="keyword">grep</span> NVIDIA  <span class="comment"># 查看NVIDIA显卡</span></span><br></pre></td></tr></table></figure></p>
 <p>我的电脑是小米pro，可以看出显卡是GeForce MX150的。<br><img src="/images/pasted-16.png" alt="upload successful"></p>
 <p>下面查看应该安装什么版本的驱动，如下命令：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ubuntu-drivers devices   <span class="comment"># 查询所有ubuntu推荐的驱动</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ubuntu-drivers devices   <span class="meta"># 查询所有ubuntu推荐的驱动</span></span><br></pre></td></tr></table></figure>
 <p>可以看出ubutnu提示我应该安装390版本的驱动。<br><img src="/images/pasted-17.png" alt="upload successful"></p>
 <p>然后就可以使用下面条命令安装所有推荐的驱动程序：</p>
 <figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">sudo ubuntu-drivers autoinstall</span></span><br></pre></td></tr></table></figure>
@@ -530,7 +530,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -541,7 +541,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -552,7 +552,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
