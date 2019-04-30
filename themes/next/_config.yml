@@ -115,10 +115,10 @@ menu_icons:
 # ---------------------------------------------------------------
 
 # Schemes
-scheme: Muse
+#scheme: Muse
 #scheme: Mist
 #scheme: Pisces
-#scheme: Gemini 
+scheme: Gemini 
 
 
 # ---------------------------------------------------------------
@@ -133,7 +133,7 @@ scheme: Muse
 social:
   GitHub: https://github.com/Jeason1015 || github
   微博: http://weibo.com/生煎地瓜干
-  #E-Mail: mailto:yourname@gmail.com || envelope
+  E-Mail: mailto:sen873591769@163.com || envelope
   #Google: https://plus.google.com/yourname || google
   #Twitter: https://twitter.com/yourname || twitter
   #FB Page: https://www.facebook.com/yourname || facebook
